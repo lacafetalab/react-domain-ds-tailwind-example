@@ -7,8 +7,8 @@ export default class LoginUserUseCase {
     this._userRepository = UserRepository;
   }
 
-  public async execute(login: string, password: string) {
-    const authEntity = await this._userRepository.login(login, password);
+  public async execute(email: string, password: string) {
+    const authEntity = await this._userRepository.login(email, password);
 
     return authEntity.toJSON();
   }

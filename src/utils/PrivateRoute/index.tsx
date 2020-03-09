@@ -1,10 +1,5 @@
 import React, { useState } from "react";
-import {
-  Route,
-  Redirect,
-  RouteComponentProps,
-  useHistory
-} from "react-router-dom";
+import { Route, Redirect, RouteComponentProps } from "react-router-dom";
 
 const PrivateRoute: React.FC<any> = ({
   auth,
@@ -14,12 +9,10 @@ const PrivateRoute: React.FC<any> = ({
   ...rest
 }) => {
   const [status, setStatus] = useState("pending");
-  const history = useHistory();
 
   auth
     .then((response: boolean) => {
       setStatus(response ? "resolved" : "rejected");
-      console.log(response ? "resolved" : "rejected", { ...rest }.path);
     })
     .catch(() => setStatus("rejected"));
 
@@ -33,15 +26,9 @@ const PrivateRoute: React.FC<any> = ({
     }
 
     if (status === "rejected") {
-      return <></>;
+      return <Redirect to={redirect} />;
     }
   };
-
-  if (status === "rejected") {
-    history.push(redirect);
-  }
-
-  //console.log(status, { ...rest }.path, "2222222222");
 
   return <Route {...rest} render={render} />;
 };

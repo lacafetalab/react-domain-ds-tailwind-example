@@ -1,6 +1,7 @@
 const routes = {
   home: "/",
-  login: "/login"
+  login: "/login",
+  cats: "/cats"
 };
 
 export default { ...routes };
