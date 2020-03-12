@@ -1,5 +1,34 @@
-import React, { useState } from "react";
-import { Route, Redirect, RouteComponentProps } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Route, Redirect } from "react-router-dom";
+
+const usePrivateRoute = (auth: any) => {
+  const [status, setStatus] = useState("idle");
+
+  useEffect(() => {
+    console.log("eeeeeeeeee");
+
+    const fetchLogged = async () => {
+      try {
+        setStatus("pending");
+        const response = await auth();
+        console.log(response);
+        if (response) {
+          setStatus("resolved");
+        } else {
+          setStatus("rejected");
+        }
+      } catch (error) {
+        setStatus("rejected");
+      }
+    };
+
+    if (status === "idle") fetchLogged();
+  }, []);
+
+  console.log(window.location.href);
+
+  return [status];
+};
 
 const PrivateRoute: React.FC<any> = ({
   auth,
@@ -8,29 +37,22 @@ const PrivateRoute: React.FC<any> = ({
   loadingComponent: LoadingComponent = () => <></>,
   ...rest
 }) => {
-  const [status, setStatus] = useState("pending");
+  const [status] = usePrivateRoute(auth);
 
-  auth
-    .then((response: boolean) => {
-      setStatus(response ? "resolved" : "rejected");
-    })
-    .catch(() => setStatus("rejected"));
-
-  const render = (props: RouteComponentProps) => {
-    if (status === "pending") {
-      return <LoadingComponent />;
-    }
-
-    if (status === "resolved") {
-      return <Component {...props} />;
-    }
-
-    if (status === "rejected") {
-      return <Redirect to={redirect} />;
-    }
-  };
-
-  return <Route {...rest} render={render} />;
+  return (
+    <Route
+      {...rest}
+      render={props =>
+        status === "resolved" ? (
+          <Component {...props} />
+        ) : status === "pending" || status === "idle" ? (
+          <LoadingComponent />
+        ) : (
+          <Redirect to={redirect} />
+        )
+      }
+    />
+  );
 };
 
 export default PrivateRoute;

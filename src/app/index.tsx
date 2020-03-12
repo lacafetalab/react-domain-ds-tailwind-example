@@ -12,18 +12,29 @@ const App: React.FC = () => {
     return !!user;
   };
 
+  const redirectHome = async () => {
+    const user = await _domain.current_user_use_case.execute();
+    return !user;
+  };
+
   return (
     <Router>
       <Switch>
         <PrivateRoute
           exact={true}
-          auth={requireAuth()}
+          auth={requireAuth}
           path={routes.home}
           redirect={routes.login}
           component={LoadingPage}
           loadingComponent={LoadingPage}
         />
-        <Route path={routes.login} component={Login} />
+        <PrivateRoute
+          exact={true}
+          auth={redirectHome}
+          path={routes.login}
+          redirect={routes.home}
+          component={Login}
+        />
       </Switch>
     </Router>
   );

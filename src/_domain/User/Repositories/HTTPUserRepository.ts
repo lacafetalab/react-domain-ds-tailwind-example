@@ -50,8 +50,8 @@ export default class HTTPUserRepository implements IUserRepository {
       data: { data: userData }
     } = await this._fetcher.get("/users/1");
 
-    const entity = userEntity(userData);
+    HTTPUserRepository._UserEntity = userEntity(userData);
 
-    return entity;
+    return HTTPUserRepository._UserEntity;
   }
 }
