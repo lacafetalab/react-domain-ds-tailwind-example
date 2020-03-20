@@ -1,37 +1,60 @@
-import React, { useState } from "react";
-import useInput from "hooks/useInput";
-import Login from "./Login";
-import _domain from "_domain";
-import { useHistory } from "react-router-dom";
-import routes from "app/routes";
+import React from "react";
+import { CcButton } from "@cafeta/components-react";
+import TextField from "components/TextField";
+import useLogin from "./hooks/useLogin";
 
-const LoginContainer: React.FC = () => {
-  const [emailValue, bindEmail] = useInput("eve.holt@reqres.in");
-  const [passValue, bindPassword] = useInput("cityslicka");
-  const [error, setSerror] = useState<string>("");
-  const history = useHistory();
-
-  const handleSubmit = async () => {
-    try {
-      await _domain.login_user_use_case.execute(
-        emailValue as string,
-        passValue as string
-      );
-
-      history.replace(routes.home);
-    } catch (e) {
-      setSerror(e?.response?.data?.error ?? "Error en el servidor");
-    }
-  };
+const Login: React.FC = () => {
+  const { register, onSubmit, errors, sendStatus, sendError } = useLogin();
 
   return (
-    <Login
-      handleSubmit={handleSubmit}
-      email={{ value: emailValue, bind: bindEmail }}
-      password={{ value: passValue, bind: bindPassword }}
-      error={error}
-    />
+    <div className="flex justify-center h-screen items-center">
+      <div className="w-full max-w-md">
+        <form
+          className="bg-neutral-04 shadow-md rounded-sm px-xxlg pt-xlg pb-xxlg mb-lg"
+          onSubmit={onSubmit}
+        >
+          <div className="mb-lg">
+            <TextField
+              label="Email"
+              placeholder="Email"
+              error={errors.email ? "Please choose a email" : ""}
+              name="email"
+              inputRef={register({ required: true })}
+            />
+          </div>
+          <div className="mb-xlg">
+            <TextField
+              label="Password"
+              placeholder="··················"
+              type="password"
+              name="password"
+              error={errors.password ? "Please choose a password" : ""}
+              inputRef={register({ required: true })}
+            />
+          </div>
+
+          {sendStatus === "rejected" && (
+            <p className="text-error text-small-02 italic mb-lg">{sendError}</p>
+          )}
+
+          <div className="flex items-center">
+            <CcButton
+              size="md"
+              onClick={onSubmit}
+              disabled={sendStatus === "pending"}
+            >
+              Sign In
+            </CcButton>
+          </div>
+        </form>
+        <p className="text-neutral-02 text-small-02">
+          user: eve.holt@reqres.in
+          <br />
+          pass: cityslicka
+        </p>
+      </div>
+    </div>
   );
 };
 
-export default LoginContainer;
+export default Login;

@@ -5,6 +5,8 @@ interface IProps {
   error?: string;
   type?: string;
   placeholder?: string;
+  inputRef?: any;
+  name?: string;
 }
 
 const TextField: React.FC<IProps> = ({
@@ -12,6 +14,8 @@ const TextField: React.FC<IProps> = ({
   type = "text",
   placeholder = "",
   error,
+  inputRef,
+  name,
   ...rest
 }) => {
   return (
@@ -29,6 +33,8 @@ const TextField: React.FC<IProps> = ({
         ].join(" ")}
         type={type}
         placeholder={placeholder}
+        ref={inputRef}
+        name={name}
         {...rest}
       />
       {error && <p className="text-error text-small-02 italic">{error}</p>}

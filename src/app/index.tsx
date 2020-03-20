@@ -1,39 +1,50 @@
-import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import PrivateRoute from "utils/PrivateRoute";
+import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Switch } from "react-router-dom";
 import _domain from "_domain";
 import routes from "./routes";
 import Login from "./Login";
 import LoadingPage from "components/LoadingPage";
+import ConditionalRoute from "utils/ConditionalRoute";
 
 const App: React.FC = () => {
-  const requireAuth = async () => {
-    const user = await _domain.current_user_use_case.execute();
-    return !!user;
-  };
+  const [authStatus, setAuthStatus] = useState("idle");
+  const isResolved = authStatus === "resolved";
+  const isRejected = authStatus === "rejected";
+  const isLoading = authStatus === "idle" || authStatus === "pending";
 
-  const redirectHome = async () => {
-    const user = await _domain.current_user_use_case.execute();
-    return !user;
-  };
+  useEffect(() => {
+    const requireAuth = async () => {
+      setAuthStatus("pending");
+      try {
+        await _domain.current_user_use_case.execute();
+        setAuthStatus("resolved");
+      } catch {
+        setAuthStatus("rejected");
+      }
+    };
+
+    requireAuth();
+  }, []);
 
   return (
     <Router>
       <Switch>
-        <PrivateRoute
+        <ConditionalRoute
           exact={true}
-          auth={requireAuth}
+          isAuth={isRejected}
           path={routes.home}
           redirect={routes.login}
           component={LoadingPage}
           loadingComponent={LoadingPage}
+          isLoading={isLoading}
         />
-        <PrivateRoute
+        <ConditionalRoute
           exact={true}
-          auth={redirectHome}
+          isAuth={isResolved}
           path={routes.login}
           redirect={routes.home}
           component={Login}
+          isLoading={isLoading}
         />
       </Switch>
     </Router>

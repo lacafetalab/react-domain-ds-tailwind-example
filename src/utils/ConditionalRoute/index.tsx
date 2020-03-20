@@ -9,7 +9,7 @@ interface IProps {
   component: any;
 }
 
-const AuthRoute: React.FC<IProps & RouteProps> = ({
+const ConditionalRoute: React.FC<IProps & RouteProps> = ({
   redirect = "/",
   component: Component,
   loadingComponent: LoadingComponent = () => <></>,
@@ -29,4 +29,4 @@ const AuthRoute: React.FC<IProps & RouteProps> = ({
   return <Route {...rest} render={render} />;
 };
 
-export default AuthRoute;
+export default ConditionalRoute;
