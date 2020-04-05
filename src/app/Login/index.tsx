@@ -33,7 +33,7 @@ const Login: React.FC = () => {
             />
           </div>
 
-          {sendStatus === "rejected" && (
+          {sendStatus === "error" && (
             <p className="text-error text-small-02 italic mb-lg">{sendError}</p>
           )}
 

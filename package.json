@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@cafeta/components-react": "^1.3.18",
+    "@cafeta/components-react": "^1.3.19",
     "@types/axios": "^0.14.0",
     "axios": "^0.19.2",
     "react": "^16.13.0",

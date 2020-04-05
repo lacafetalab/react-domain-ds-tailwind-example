@@ -1,38 +1,38 @@
 import { useForm } from "react-hook-form";
-import { useState } from "react";
-import _domain from "_domain";
-import routes from "app/routes";
-import { useHistory } from "react-router-dom";
-
-type sendStatusType = "idle" | "pending" | "resolved" | "rejected";
+import { useEffect } from "react";
+import useUser from "hooks/useUser";
+import useDomain from "hooks/useDomain";
+import { USER_UPDATE } from "state/User/types";
 
 const useLogin = () => {
   const { register, handleSubmit, errors } = useForm();
-  const [sendStatus, setSendStatus] = useState<sendStatusType>("idle");
-  const [sendError, setSendError] = useState(null);
-  const history = useHistory();
+  const { dispatch } = useUser();
+  const { data, run, error, status } = useDomain();
+
+  useEffect(() => {
+    const setUserData = () => {
+      dispatch({
+        type: USER_UPDATE,
+        payload: data,
+      });
+    };
+
+    if (data) setUserData();
+  }, [data, dispatch]);
 
   const onSubmit = handleSubmit(async ({ email, password }) => {
-    setSendStatus("pending");
-    setSendError(null);
-
-    try {
-      await _domain.login_user_use_case.execute(email, password);
-      setSendStatus("resolved");
-
-      history.replace(routes.home);
-    } catch (e) {
-      setSendStatus("rejected");
-      setSendError(e?.response?.data?.error ?? "Error en el servidor");
-    }
+    run((domain) => domain.login_user_use_case.execute(email, password));
   });
 
   return {
     register,
     onSubmit,
     errors,
-    sendStatus,
-    sendError
+    sendStatus: status,
+    sendError:
+      status === "error"
+        ? error?.response?.data?.error ?? "Error en el servidor"
+        : null,
   };
 };
 

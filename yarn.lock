@@ -935,17 +935,17 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
-"@cafeta/components-react@^1.3.18":
-  version "1.3.18"
-  resolved "https://registry.yarnpkg.com/@cafeta/components-react/-/components-react-1.3.18.tgz#42e4fa752960f5c7a2395200a1c4661a6e9467d1"
-  integrity sha512-nruZ9c4Wtf41HplLPziYA8+sWAmTQDfK3zIdHQQyytKPd+cSHPs8PVBiBusK0LVEq+kf5e33W/heO+MGRX/m3g==
+"@cafeta/components-react@^1.3.19":
+  version "1.3.19"
+  resolved "https://registry.yarnpkg.com/@cafeta/components-react/-/components-react-1.3.19.tgz#ec8598dc4be50941b043dcade212c9bd38695fe6"
+  integrity sha512-3+8HcSlP8/wIl9jPpDo61cgDN1HEsXroYoaAX27cvGc2Ek/vNJaoOpfzvSGqTXW5lq1Zy/UbgOjMmQ5eJ0MwyQ==
   dependencies:
-    "@cafeta/components" "^1.2.17"
+    "@cafeta/components" "^1.2.18"
 
-"@cafeta/components@^1.2.17":
-  version "1.2.17"
-  resolved "https://registry.yarnpkg.com/@cafeta/components/-/components-1.2.17.tgz#01e13d17a5596adab854c8832164d568248a2192"
-  integrity sha512-XbjEBbvZDEJ020N6H4xuY8YzcNj1TanuLWg9r+sq5Aoe0Kcn1wWdyn+Bjj57YKXSL5aS9Sz7ExjBpmHWFtI9cA==
+"@cafeta/components@^1.2.18":
+  version "1.2.18"
+  resolved "https://registry.yarnpkg.com/@cafeta/components/-/components-1.2.18.tgz#fa46df64f58996f9ea727ccb96a3b7b03b8f7409"
+  integrity sha512-mY7Bw/2FBw8lmIxpSlyGqxiA+1NgoJ3XXUBGIHF5pMisHKb0st9wCd6a23eCRaH9+z8noTPgQ6R0eL7UI9t0TQ==
 
 "@cnakazawa/watch@^1.0.3":
   version "1.0.4"
