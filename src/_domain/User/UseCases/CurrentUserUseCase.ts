@@ -1,4 +1,5 @@
 import IUserRepository from "../Repositories/IUserRepository";
+import ReactDOM from "react-dom";
 
 export default class CurrentUserUseCase {
   private _userRepository: IUserRepository;
