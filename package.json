@@ -18,7 +18,8 @@
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",
-    "lint": "eslint --ext js,ts,tsx src --cache --fix",
+    "lint": "eslint --ext js,ts,tsx src --cache",
+    "format": "prettier --write",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
