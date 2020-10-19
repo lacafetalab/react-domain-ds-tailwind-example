@@ -9,7 +9,6 @@ export default class CurrentUserUseCase {
 
   public async execute() {
     const authEntity = await this._userRepository.current();
-
     return authEntity?.toJSON();
   }
 }
