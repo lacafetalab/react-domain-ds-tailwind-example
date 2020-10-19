@@ -3,7 +3,7 @@ import IUserRepository from "../Repositories/IUserRepository";
 export default class CurrentUserUseCase {
   private _userRepository: IUserRepository;
 
-  constructor(UserRepository) {
+  constructor(UserRepository: IUserRepository) {
     this._userRepository = UserRepository;
   }
 
